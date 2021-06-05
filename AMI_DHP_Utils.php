@@ -46,23 +46,18 @@ class AMI_DHP_Utils
         );
 
         // first delete all hidden posts
-        if (count($hiddencomments)) {
-            foreach ($hiddencomments as $hiddencomment) {
-                AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddencomment['opostid']);
-            }
+        foreach ($hiddencomments as $hiddencomment) {
+            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddencomment['opostid']);
         }
 
         // delete all the hidden answers
-        if (count($hiddenanswers)) {
-            foreach ($hiddenanswers as $hiddenanswer) {
-                AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenanswer['opostid']);
-            }
+        foreach ($hiddenanswers as $hiddenanswer) {
+            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenanswer['opostid']);
         }
+
         // delete all the hidden questions
-        if (count($hiddenquestions)) {
-            foreach ($hiddenquestions as $hiddenquestion) {
-                AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenquestion['postid']);
-            }
+        foreach ($hiddenquestions as $hiddenquestion) {
+            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenquestion['postid']);
         }
     }
 
@@ -96,17 +91,14 @@ class AMI_DHP_Utils
                 $commentsfollows = qa_post_get_question_commentsfollows($postid);
                 $closepost = qa_post_get_question_closepost($postid);
 
-                if (count($answers)) {
-                    foreach ($answers as $answer) {
-                        AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($answer['postid']);
-                    }
+                foreach ($answers as $answer) {
+                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($answer['postid']);
                 }
 
-                if (count($commentsfollows)) {
-                    foreach ($commentsfollows as $commentsfollow) {
-                        AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
-                    }
+                foreach ($commentsfollows as $commentsfollow) {
+                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
                 }
+
                 if (!in_array($oldpost['postid'], $this->ami_dhp_posts_deleted)) {
                     qa_question_delete($oldpost, null, null, null, $closepost);
                     $this->ami_dhp_posts_deleted[] = $oldpost['postid'];
@@ -117,11 +109,10 @@ class AMI_DHP_Utils
                 $question = qa_post_get_full($oldpost['parentid'], 'Q');
                 $commentsfollows = qa_post_get_answer_commentsfollows($postid);
 
-                if (count($commentsfollows)) {
-                    foreach ($commentsfollows as $commentsfollow) {
-                        AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
-                    }
+                foreach ($commentsfollows as $commentsfollow) {
+                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
                 }
+
                 if (!in_array($oldpost['postid'], $this->ami_dhp_posts_deleted)) {
                     qa_answer_delete($oldpost, $question, null, null, null);
                     $this->ami_dhp_posts_deleted[] = $oldpost['postid'];
