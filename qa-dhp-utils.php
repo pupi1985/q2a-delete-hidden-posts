@@ -140,7 +140,7 @@ function ami_dhp_post_delete_recursive($postid)
  */
 function ami_dhp_add_q_delete_button(&$buttons, $post)
 {
-    if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+    if (!ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
         return;
     }
 
@@ -166,7 +166,7 @@ function ami_dhp_add_q_delete_button(&$buttons, $post)
  */
 function ami_dhp_add_a_delete_button(&$buttons, $post)
 {
-    if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+    if (!ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
         return;
     }
 
@@ -193,7 +193,7 @@ function ami_dhp_add_a_delete_button(&$buttons, $post)
  */
 function ami_dhp_add_c_delete_button(&$buttons, $post)
 {
-    if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+    if (!ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
         return;
     }
 
