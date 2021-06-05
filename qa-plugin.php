@@ -18,11 +18,8 @@ if (!defined('QA_VERSION')) { // don't allow this page to be requested directly 
     exit;
 }
 
-/*global variable declaration */
-$ami_dhp_posts_deleted = array();
-
 require_once 'AMI_DHP_Constants.php';
-require_once 'qa-dhp-utils.php';
+require_once 'AMI_DHP_Utils.php';
 
 qa_register_plugin_module('module', 'qa-dhp-admin.php', 'qa_dhp_admin', 'Delete Hidden Posts Admin');
 qa_register_plugin_layer('qa-dhp-layer.php', 'Delete Hidden Posts Layer');
