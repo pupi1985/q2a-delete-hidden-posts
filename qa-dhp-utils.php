@@ -78,7 +78,7 @@ function ami_dhp_post_delete_recursive($postid)
     $oldpost = qa_post_get_full($postid, 'QAC');
 
     if (!$oldpost['hidden']) {
-        qa_post_set_hidden($postid, true, null);
+        qa_post_set_status($postid, QA_POST_STATUS_HIDDEN, null);
         $oldpost = qa_post_get_full($postid, 'QAC');
     }
 
