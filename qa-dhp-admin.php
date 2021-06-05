@@ -72,7 +72,6 @@ class qa_dhp_admin
                     'label' => dhp_lang('delete_hidden_posts'),
                     'tags' => 'NAME="' . self::DELETE_HIDDEN_POSTS_BTN . '" onclick="dhp_ask_user_confirmation(event) && qa_show_waiting_after(this, false);"',
                 ),
-
             ),
         );
     }
