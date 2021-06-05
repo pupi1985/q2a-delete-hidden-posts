@@ -25,8 +25,8 @@ class qa_dhp_admin
             qa_opt(AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q, (int)qa_post_text(AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q));
             $ok = qa_lang('admin/options_saved');
         } else if (qa_clicked(self::DELETE_HIDDEN_POSTS_BTN)) {
-            $ok = AMI_DHP_Utils::getInstance()->dhp_lang('all_hidden_posts_deleted');
-            AMI_DHP_Utils::getInstance()->ami_dhp_delete_hidden_posts_process();
+            $ok = AMI_DHP_Utils::getInstance()->lang('all_hidden_posts_deleted');
+            AMI_DHP_Utils::getInstance()->delete_hidden_posts_process();
         }
 
         //	Create the form for display_header_text();
@@ -43,7 +43,7 @@ class qa_dhp_admin
 
         $fields[AMI_DHP_Constants::SAME_USER_CAN_DELETE_QA] = array(
             'id' => AMI_DHP_Constants::SAME_USER_CAN_DELETE_QA,
-            'label' => AMI_DHP_Utils::getInstance()->dhp_lang('same_user_can_delete'),
+            'label' => AMI_DHP_Utils::getInstance()->lang('same_user_can_delete'),
             'type' => 'checkbox',
             'value' => qa_opt(AMI_DHP_Constants::SAME_USER_CAN_DELETE_QA),
             'tags' => 'NAME="' . AMI_DHP_Constants::SAME_USER_CAN_DELETE_QA . '"',
@@ -51,7 +51,7 @@ class qa_dhp_admin
 
         $fields[AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q] = array(
             'id' => AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q,
-            'label' => AMI_DHP_Utils::getInstance()->dhp_lang('choose_who_can_delete_all'),
+            'label' => AMI_DHP_Utils::getInstance()->lang('choose_who_can_delete_all'),
             'type' => 'select',
             'value' => $user_levels[qa_opt(AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q)],
             'options' => $user_levels,
@@ -69,7 +69,7 @@ class qa_dhp_admin
                     'tags' => 'NAME="' . self::SAVE_BTN . '"',
                 ),
                 array(
-                    'label' => AMI_DHP_Utils::getInstance()->dhp_lang('delete_hidden_posts'),
+                    'label' => AMI_DHP_Utils::getInstance()->lang('delete_hidden_posts'),
                     'tags' => 'NAME="' . self::DELETE_HIDDEN_POSTS_BTN . '" onclick="dhp_ask_user_confirmation(event) && qa_show_waiting_after(this, false);"',
                 ),
             ),

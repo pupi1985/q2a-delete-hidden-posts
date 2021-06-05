@@ -6,7 +6,7 @@ class AMI_DHP_Utils
     private static $instance = null;
 
     /** @var array */
-    private $ami_dhp_posts_deleted = array();
+    private $posts_deleted = array();
 
     /**
      * @return AMI_DHP_Utils
@@ -23,7 +23,7 @@ class AMI_DHP_Utils
     /**
      * Process the delete hidden posts request from the admin
      */
-    public function ami_dhp_delete_hidden_posts_process()
+    public function delete_hidden_posts_process()
     {
         // load all required files if not loaded
         require_once QA_INCLUDE_DIR . 'qa-app-admin.php';
@@ -47,17 +47,17 @@ class AMI_DHP_Utils
 
         // first delete all hidden posts
         foreach ($hiddencomments as $hiddencomment) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddencomment['opostid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($hiddencomment['opostid']);
         }
 
         // delete all the hidden answers
         foreach ($hiddenanswers as $hiddenanswer) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenanswer['opostid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($hiddenanswer['opostid']);
         }
 
         // delete all the hidden questions
         foreach ($hiddenquestions as $hiddenquestion) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($hiddenquestion['postid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($hiddenquestion['postid']);
         }
     }
 
@@ -66,7 +66,7 @@ class AMI_DHP_Utils
      *
      * @param $postid
      */
-    public function ami_dhp_post_delete_recursive($postid)
+    public function post_delete_recursive($postid)
     {
         require_once QA_INCLUDE_DIR . 'qa-app-admin.php';
         require_once QA_INCLUDE_DIR . 'qa-db-admin.php';
@@ -74,7 +74,7 @@ class AMI_DHP_Utils
         require_once QA_INCLUDE_DIR . 'qa-app-format.php';
         require_once QA_INCLUDE_DIR . 'qa-app-posts.php';
 
-        if (in_array($postid, $this->ami_dhp_posts_deleted)) {
+        if (in_array($postid, $this->posts_deleted)) {
             return;
         }
 
@@ -92,16 +92,16 @@ class AMI_DHP_Utils
                 $closepost = qa_post_get_question_closepost($postid);
 
                 foreach ($answers as $answer) {
-                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($answer['postid']);
+                    AMI_DHP_Utils::getInstance()->post_delete_recursive($answer['postid']);
                 }
 
                 foreach ($commentsfollows as $commentsfollow) {
-                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
+                    AMI_DHP_Utils::getInstance()->post_delete_recursive($commentsfollow['postid']);
                 }
 
-                if (!in_array($oldpost['postid'], $this->ami_dhp_posts_deleted)) {
+                if (!in_array($oldpost['postid'], $this->posts_deleted)) {
                     qa_question_delete($oldpost, null, null, null, $closepost);
-                    $this->ami_dhp_posts_deleted[] = $oldpost['postid'];
+                    $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
 
@@ -110,21 +110,21 @@ class AMI_DHP_Utils
                 $commentsfollows = qa_post_get_answer_commentsfollows($postid);
 
                 foreach ($commentsfollows as $commentsfollow) {
-                    AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($commentsfollow['postid']);
+                    AMI_DHP_Utils::getInstance()->post_delete_recursive($commentsfollow['postid']);
                 }
 
-                if (!in_array($oldpost['postid'], $this->ami_dhp_posts_deleted)) {
+                if (!in_array($oldpost['postid'], $this->posts_deleted)) {
                     qa_answer_delete($oldpost, $question, null, null, null);
-                    $this->ami_dhp_posts_deleted[] = $oldpost['postid'];
+                    $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
 
             case 'C':
                 $parent = qa_post_get_full($oldpost['parentid'], 'QA');
                 $question = qa_post_parent_to_question($parent);
-                if (!in_array($oldpost['postid'], $this->ami_dhp_posts_deleted)) {
+                if (!in_array($oldpost['postid'], $this->posts_deleted)) {
                     qa_comment_delete($oldpost, $question, $parent, null, null, null);
-                    $this->ami_dhp_posts_deleted[] = $oldpost['postid'];
+                    $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
         }
@@ -137,20 +137,20 @@ class AMI_DHP_Utils
      * @param $buttons
      * @param $post
      */
-    public function ami_dhp_add_q_delete_button(&$buttons, $post)
+    public function add_q_delete_button(&$buttons, $post)
     {
-        if (!$this->ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
+        if (!$this->is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
             return;
         }
 
         $prefix = 'q' . $post['postid'] . '_';
         if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_Q_BTN)) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($post['postid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect('');
         } else {
             $buttons[AMI_DHP_Constants::DELETE_Q_BTN] = array(
                 'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_Q_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
-                'label' => $this->dhp_lang('delete_q'),
+                'label' => $this->lang('delete_q'),
                 'popup' => qa_lang('question/delete_q_popup'),
             );
         }
@@ -162,21 +162,21 @@ class AMI_DHP_Utils
      * @param $buttons
      * @param $post
      */
-    public function ami_dhp_add_a_delete_button(&$buttons, $post)
+    public function add_a_delete_button(&$buttons, $post)
     {
-        if (!$this->ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
+        if (!$this->is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
             return;
         }
 
         $prefix = 'a' . $post['postid'] . '_';
 
         if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_A_BTN)) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($post['postid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect(qa_request());
         } else {
             $buttons[AMI_DHP_Constants::DELETE_A_BTN] = array(
                 'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_A_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
-                'label' => $this->dhp_lang('delete_a'),
+                'label' => $this->lang('delete_a'),
                 'popup' => qa_lang('question/delete_a_popup'),
             );
         }
@@ -188,21 +188,21 @@ class AMI_DHP_Utils
      * @param $buttons
      * @param $post
      */
-    public function ami_dhp_add_c_delete_button(&$buttons, $post)
+    public function add_c_delete_button(&$buttons, $post)
     {
-        if (!$this->ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
+        if (!$this->is_user_eligible_to_delete(qa_get_logged_in_userid(), isset($post['userid']) ? $post['userid'] : null) || isset($buttons['delete'])) {
             return;
         }
 
         $prefix = 'c' . $post['postid'] . '_';
 
         if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_C_BTN)) {
-            AMI_DHP_Utils::getInstance()->ami_dhp_post_delete_recursive($post['postid']);
+            AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect(qa_request());
         } else {
             $buttons[AMI_DHP_Constants::DELETE_C_BTN] = array(
                 'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_C_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
-                'label' => $this->dhp_lang('delete_c'),
+                'label' => $this->lang('delete_c'),
                 'popup' => qa_lang('question/delete_c_popup'),
             );
         }
@@ -216,7 +216,7 @@ class AMI_DHP_Utils
      *
      * @return bool
      */
-    public function ami_dhp_is_user_eligible_to_delete($userid = null, $post_userid = null)
+    public function is_user_eligible_to_delete($userid = null, $post_userid = null)
     {
         if (is_null($userid) || !isset($userid)) {
             // if the userid is not set then get the logged in userid
@@ -248,12 +248,14 @@ class AMI_DHP_Utils
      *
      * @return mixed|string
      */
-    public function dhp_lang($indentifier, $subs = null)
+    public function lang($indentifier, $subs = null)
     {
-        if (!is_array($subs)) {
-            return empty($subs) ? qa_lang('ami_dhp/' . $indentifier) : qa_lang_sub('ami_dhp/' . $indentifier, $subs);
-        } else {
+        if (is_array($subs)) {
             return strtr(qa_lang('ami_dhp/' . $indentifier), $subs);
         }
+
+        return empty($subs)
+            ? qa_lang('ami_dhp/' . $indentifier)
+            : qa_lang_sub('ami_dhp/' . $indentifier, $subs);
     }
 }
