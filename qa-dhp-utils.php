@@ -145,8 +145,7 @@ if (!function_exists('ami_dhp_add_q_delete_button')) {
      */
     function ami_dhp_add_q_delete_button(&$buttons, $post)
     {
-        if (!qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
-            // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
+        if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
             return false;
         }
 
@@ -176,9 +175,7 @@ if (!function_exists('ami_dhp_add_a_delete_button')) {
      */
     function ami_dhp_add_a_delete_button(&$buttons, $post)
     {
-
-        if (!qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
-            // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
+        if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
             return false;
         }
 
@@ -208,9 +205,7 @@ if (!function_exists('ami_dhp_add_c_delete_button')) {
      */
     function ami_dhp_add_c_delete_button(&$buttons, $post)
     {
-
-        if (!qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
-            // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
+        if (!(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
             return false;
         }
 
@@ -242,11 +237,6 @@ if (!function_exists('ami_dhp_is_user_eligible_to_delete')) {
      */
     function ami_dhp_is_user_eligible_to_delete($userid = null, $post_userid = null)
     {
-        // if the plugin is not enabled first reuturn false
-        if (!qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED)) {
-            return false;
-        }
-
         if (is_null($userid) || !isset($userid)) {
             // if the userid is not set then get the logged in userid
             $userid = qa_get_logged_in_userid();
