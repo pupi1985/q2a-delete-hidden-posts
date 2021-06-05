@@ -22,17 +22,9 @@
     /*global variable declaration */
     $ami_dhp_posts_deleted = array();
 
-    @define('AMI_DHP_DIR', dirname(__FILE__));
-    @define('AMI_DHP_DIR_NAME', basename(dirname(__FILE__)));
-
-    require_once AMI_DHP_DIR . '/qa-dhp-utils.php';
-    require_once AMI_DHP_DIR . '/qa-dhp-admin.php';
+    require_once 'AMI_DHP_Constants.php';
+    require_once 'qa-dhp-utils.php';
 
     qa_register_plugin_module('module', 'qa-dhp-admin.php', 'qa_dhp_admin', 'Delete Hidden Posts Admin');
     qa_register_plugin_layer('qa-dhp-layer.php', 'Delete Hidden Posts Layer');
     qa_register_plugin_phrases('lang/qa-dhp-lang-*.php', 'ami_dhp');
-
-
-    /*
-        Omit PHP closing tag to help avoid accidental output
-    */

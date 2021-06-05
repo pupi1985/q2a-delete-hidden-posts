@@ -145,21 +145,21 @@
          */
         function ami_dhp_add_q_delete_button(&$buttons, $post)
         {
-            if ( !qa_opt(qa_dhp_admin::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+            if ( !qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
                 // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
                 return false;
             }
 
             $prefix = 'q' . $post['postid'] . '_';
-            if (qa_clicked($prefix . qa_dhp_admin::DELETE_Q_BTN)) {
+            if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_Q_BTN)) {
                 ami_dhp_post_delete_recursive($post['postid']);
                 qa_redirect(''); // redirect since question has gone
                 exit;
 
             } else {
                 // add the delete buton
-                $buttons[ qa_dhp_admin::DELETE_Q_BTN ] = array(
-                    'tags'  => 'name="' . $prefix . qa_dhp_admin::DELETE_Q_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+                $buttons[ AMI_DHP_Constants::DELETE_Q_BTN ] = array(
+                    'tags'  => 'name="' . $prefix . AMI_DHP_Constants::DELETE_Q_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                     'label' => dhp_lang('delete_q'),
                     'popup' => qa_lang('question/delete_q_popup'),
                 );
@@ -177,21 +177,21 @@
         function ami_dhp_add_a_delete_button(&$buttons, $post)
         {
 
-            if ( !qa_opt(qa_dhp_admin::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+            if ( !qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
                 // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
                 return false;
             }
 
             $prefix = 'a' . $post['postid'] . '_';
 
-            if (qa_clicked($prefix . qa_dhp_admin::DELETE_A_BTN)) {
+            if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_A_BTN)) {
                 ami_dhp_post_delete_recursive($post['postid']);
                 qa_redirect(qa_request());
                 exit;
             } else {
                 // add the anonymous buton
-                $buttons[ qa_dhp_admin::DELETE_A_BTN ] = array(
-                    'tags'  => 'name="' . $prefix . qa_dhp_admin::DELETE_A_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+                $buttons[ AMI_DHP_Constants::DELETE_A_BTN ] = array(
+                    'tags'  => 'name="' . $prefix . AMI_DHP_Constants::DELETE_A_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                     'label' => dhp_lang('delete_a'),
                     'popup' => qa_lang('question/delete_a_popup'),
                 );
@@ -209,21 +209,21 @@
         function ami_dhp_add_c_delete_button(&$buttons, $post)
         {
 
-            if ( !qa_opt(qa_dhp_admin::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
+            if ( !qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED) || !(ami_dhp_is_user_eligible_to_delete(qa_get_logged_in_userid(), @$post['userid'])) || isset($buttons['delete'])) {
                 // if the feature is not enabled from the admin panel , then return a falsy value , do not process anything
                 return false;
             }
 
             $prefix = 'c' . $post['postid'] . '_';
 
-            if (qa_clicked($prefix . qa_dhp_admin::DELETE_C_BTN)) {
+            if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_C_BTN)) {
                 ami_dhp_post_delete_recursive($post['postid']);
                 qa_redirect(qa_request());
                 exit;
             } else {
                 // add the anonymous buton
-                $buttons[ qa_dhp_admin::DELETE_C_BTN ] = array(
-                    'tags'  => 'name="' . $prefix . qa_dhp_admin::DELETE_C_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+                $buttons[ AMI_DHP_Constants::DELETE_C_BTN ] = array(
+                    'tags'  => 'name="' . $prefix . AMI_DHP_Constants::DELETE_C_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                     'label' => dhp_lang('delete_c'),
                     'popup' => qa_lang('question/delete_c_popup'),
                 );
@@ -244,7 +244,7 @@
         function ami_dhp_is_user_eligible_to_delete($userid = null, $post_userid = null)
         {
             // if the plugin is not enabled first reuturn false
-            if ( !qa_opt(qa_dhp_admin::PLUGIN_ENABLED)) {
+            if ( !qa_opt(AMI_DHP_Constants::PLUGIN_ENABLED)) {
                 return false;
             }
 
@@ -259,11 +259,11 @@
             }
 
             // return true for all special users that is allowed from admin panel
-            if (qa_get_logged_in_level() >= qa_opt(qa_dhp_admin::MIN_LEVEL_TO_DELETE_Q)) {
+            if (qa_get_logged_in_level() >= qa_opt(AMI_DHP_Constants::MIN_LEVEL_TO_DELETE_Q)) {
                 return true;
             }
 
-            if (qa_opt(qa_dhp_admin::SAME_USER_CAN_DELETE_QA) && !is_null($post_userid) && ((int) $userid == (int) $post_userid)) {
+            if (qa_opt(AMI_DHP_Constants::SAME_USER_CAN_DELETE_QA) && !is_null($post_userid) && ((int) $userid == (int) $post_userid)) {
                 return true;
             }
 
