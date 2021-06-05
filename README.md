@@ -17,21 +17,16 @@ effort.
 ## Features
 
 - Ability to delete all the hidden posts from Question2Answer database having dependencies
-- When a question is deleted all its Answers, Comments gets deleted
-- When a answer is deleted all its Comments and Related Questions gets deleted
-- Buttons are displayed *after* a Question's or Answer's or Comemnt's response buttons - which helps to delete the post
+- When a question is deleted all its Answers, Comments are deleted
+- When an answer is deleted all its Comments and Related Questions are deleted
+- Buttons are displayed *after* a Question's or Answer's or Comment's response buttons - which helps to delete the post
   with one click
+  
+## Author
 
-## Version History
 
-- 1.1
-    * added ask user confirmation while deleting a question / answer / comment
-    * added ask admin confirmation while deleting all hidden posts
-    * removed css styling , only handling with q2a provided classes
-    * improved redirect logic
-    * improved code
-- 1.0
-    * initial stable release
+The original author is [Amiya Sahu](https://www.question2answer.org/qa/user/Ami). 
+I ([pupi1985](https://www.question2answer.org/qa/user/pupi1985)) am just extending the original plugin.
 
 ## Disclaimer
 
@@ -42,4 +37,4 @@ will not be given. If it breaks, you get to keep both parts.
 
 Question2Answer is a free and open source platform for Q&A sites. For more information, visit:
 
-http://www.question2answer.org/
+https://www.question2answer.org/
