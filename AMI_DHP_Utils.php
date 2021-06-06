@@ -36,13 +36,11 @@ class AMI_DHP_Utils
             return;
         }
 
-        $userid = qa_get_logged_in_userid();
-
         //	Find recently hidden questions, answers, comments
         list($hiddenquestions, $hiddenanswers, $hiddencomments) = qa_db_select_with_pending(
-            qa_db_qs_selectspec($userid, 'created', 0, null, null, 'Q_HIDDEN', true),
-            qa_db_recent_a_qs_selectspec($userid, 0, null, null, 'A_HIDDEN', true),
-            qa_db_recent_c_qs_selectspec($userid, 0, null, null, 'C_HIDDEN', true)
+            qa_db_qs_selectspec(null, 'created', 0, null, null, 'Q_HIDDEN', true),
+            qa_db_recent_a_qs_selectspec(null, 0, null, null, 'A_HIDDEN', true),
+            qa_db_recent_c_qs_selectspec(null, 0, null, null, 'C_HIDDEN', true)
         );
 
         // first delete all hidden posts
