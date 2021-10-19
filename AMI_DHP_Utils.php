@@ -142,12 +142,12 @@ class AMI_DHP_Utils
         }
 
         $prefix = 'q' . $post['postid'] . '_';
-        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_Q_BTN)) {
+        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_BTN)) {
             AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect('');
         } else {
-            $buttons[AMI_DHP_Constants::DELETE_Q_BTN] = array(
-                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_Q_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+            $buttons[AMI_DHP_Constants::DELETE_BTN] = array(
+                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                 'label' => $this->lang('delete_q'),
                 'popup' => qa_lang('question/delete_q_popup'),
             );
@@ -168,12 +168,12 @@ class AMI_DHP_Utils
 
         $prefix = 'a' . $post['postid'] . '_';
 
-        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_A_BTN)) {
+        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_BTN)) {
             AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect(qa_request());
         } else {
-            $buttons[AMI_DHP_Constants::DELETE_A_BTN] = array(
-                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_A_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+            $buttons[AMI_DHP_Constants::DELETE_BTN] = array(
+                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                 'label' => $this->lang('delete_a'),
                 'popup' => qa_lang('question/delete_a_popup'),
             );
@@ -194,12 +194,12 @@ class AMI_DHP_Utils
 
         $prefix = 'c' . $post['postid'] . '_';
 
-        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_C_BTN)) {
+        if (qa_clicked($prefix . AMI_DHP_Constants::DELETE_BTN)) {
             AMI_DHP_Utils::getInstance()->post_delete_recursive($post['postid']);
             qa_redirect(qa_request());
         } else {
-            $buttons[AMI_DHP_Constants::DELETE_C_BTN] = array(
-                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_C_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
+            $buttons[AMI_DHP_Constants::DELETE_BTN] = array(
+                'tags' => 'name="' . $prefix . AMI_DHP_Constants::DELETE_BTN . '" class="qa-form-light-button qa-form-light-button-delete" onclick="dhp_ask_user_confirmation(event);"',
                 'label' => $this->lang('delete_c'),
                 'popup' => qa_lang('question/delete_c_popup'),
             );
