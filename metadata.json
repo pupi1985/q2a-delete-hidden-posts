@@ -2,13 +2,13 @@
     "name": "Q2A Delete Hidden Posts",
     "uri": "https://github.com/pupi1985/q2a-delete-hidden-posts",
     "description": "Provides a basic widget for displaying breadcrumbs",
-    "version": "1.6.1",
-    "date": "2021-10-19",
+    "version": "1.6.2",
+    "date": "2021-12-17",
     "author": "Amiya Sahu (extended by pupi1985)",
     "author_uri": "http://www.amiyasahu.com",
     "license": "GPLv3",
     "update_uri": "https://raw.githubusercontent.com/pupi1985/q2a-delete-hidden-posts/master/metadata.json",
-    "min_q2a": "1.6.0",
+    "min_q2a": "1.7.0",
     "min_php": "5.1.6",
     "load_order": "after_db_init"
 }
