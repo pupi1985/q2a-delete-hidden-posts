@@ -26,10 +26,10 @@ class AMI_DHP_Utils
     public function delete_hidden_posts_process()
     {
         // load all required files if not loaded
-        require_once QA_INCLUDE_DIR . 'qa-app-admin.php';
-        require_once QA_INCLUDE_DIR . 'qa-db-admin.php';
-        require_once QA_INCLUDE_DIR . 'qa-db-selects.php';
-        require_once QA_INCLUDE_DIR . 'qa-app-format.php';
+        require_once QA_INCLUDE_DIR . 'app/admin.php';
+        require_once QA_INCLUDE_DIR . 'db/admin.php';
+        require_once QA_INCLUDE_DIR . 'db/selects.php';
+        require_once QA_INCLUDE_DIR . 'app/format.php';
 
         //	Check admin privileges
         if (qa_user_maximum_permit_error('permit_hide_show') && qa_user_maximum_permit_error('permit_delete_hidden')) {
@@ -66,11 +66,11 @@ class AMI_DHP_Utils
      */
     public function post_delete_recursive($postid)
     {
-        require_once QA_INCLUDE_DIR . 'qa-app-admin.php';
-        require_once QA_INCLUDE_DIR . 'qa-db-admin.php';
-        require_once QA_INCLUDE_DIR . 'qa-db-selects.php';
-        require_once QA_INCLUDE_DIR . 'qa-app-format.php';
-        require_once QA_INCLUDE_DIR . 'qa-app-posts.php';
+        require_once QA_INCLUDE_DIR . 'app/admin.php';
+        require_once QA_INCLUDE_DIR . 'db/admin.php';
+        require_once QA_INCLUDE_DIR . 'db/selects.php';
+        require_once QA_INCLUDE_DIR . 'app/format.php';
+        require_once QA_INCLUDE_DIR . 'app/posts.php';
 
         if (in_array($postid, $this->posts_deleted)) {
             return;
