@@ -223,14 +223,12 @@ class AMI_DHP_Utils
      */
     public function is_user_eligible_to_delete($userid = null, $post_userid = null)
     {
-        if (is_null($userid) || !isset($userid)) {
-            // if the userid is not set then get the logged in userid
+        if (is_null($userid)) {
             $userid = qa_get_logged_in_userid();
-        }
 
-        if (is_null($userid) && !qa_is_logged_in()) {
-            // if still it is null then ret false
-            return false;
+            if (is_null($userid)) {
+                return false;
+            }
         }
 
         // return true for all special users that is allowed from admin panel
