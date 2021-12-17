@@ -72,6 +72,13 @@ class AMI_DHP_Utils
         require_once QA_INCLUDE_DIR . 'app/format.php';
         require_once QA_INCLUDE_DIR . 'app/posts.php';
 
+        // For qa_cookie_get()
+        require_once QA_INCLUDE_DIR . 'app/cookies.php';
+
+        $loggedInUserId = qa_get_logged_in_userid();
+        $loggedInHandle = qa_get_logged_in_handle();
+        $loggedInCookie = qa_cookie_get();
+
         if (in_array($postid, $this->posts_deleted)) {
             return;
         }
@@ -79,7 +86,7 @@ class AMI_DHP_Utils
         $oldpost = qa_post_get_full($postid, 'QAC');
 
         if (!$oldpost['hidden']) {
-            qa_post_set_status($postid, QA_POST_STATUS_HIDDEN);
+            qa_post_set_status($postid, QA_POST_STATUS_HIDDEN, $loggedInUserId);
             $oldpost = qa_post_get_full($postid, 'QAC');
         }
 
@@ -98,7 +105,7 @@ class AMI_DHP_Utils
                 }
 
                 if (!in_array($oldpost['postid'], $this->posts_deleted)) {
-                    qa_question_delete($oldpost, null, null, null, $closepost);
+                    qa_question_delete($oldpost, $loggedInUserId, $loggedInHandle, $loggedInCookie, $closepost);
                     $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
@@ -112,7 +119,7 @@ class AMI_DHP_Utils
                 }
 
                 if (!in_array($oldpost['postid'], $this->posts_deleted)) {
-                    qa_answer_delete($oldpost, $question, null, null, null);
+                    qa_answer_delete($oldpost, $question, $loggedInUserId, $loggedInHandle, $loggedInCookie);
                     $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
@@ -121,7 +128,7 @@ class AMI_DHP_Utils
                 $parent = qa_post_get_full($oldpost['parentid'], 'QA');
                 $question = qa_post_parent_to_question($parent);
                 if (!in_array($oldpost['postid'], $this->posts_deleted)) {
-                    qa_comment_delete($oldpost, $question, $parent, null, null, null);
+                    qa_comment_delete($oldpost, $question, $parent, $loggedInUserId, $loggedInHandle, $loggedInCookie);
                     $this->posts_deleted[] = $oldpost['postid'];
                 }
                 break;
