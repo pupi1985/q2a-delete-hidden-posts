@@ -4,7 +4,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 {
     function q_view_buttons($q_view)
     {
-        if (isset($q_view['form']['buttons']) && count($q_view['form']['buttons'])) {
+        if (!empty($q_view['form']['buttons']) && !empty($q_view['raw'])) {
             AMI_DHP_Utils::getInstance()->add_q_delete_button($q_view['form']['buttons'], $q_view['raw']);
         }
 
@@ -13,7 +13,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function a_item_buttons($a_item)
     {
-        if (isset($a_item['form']['buttons']) && count($a_item['form']['buttons'])) {
+        if (!empty($a_item['form']['buttons']) && !empty($a_item['raw'])) {
             AMI_DHP_Utils::getInstance()->add_a_delete_button($a_item['form']['buttons'], $a_item['raw']);
         }
 
@@ -22,7 +22,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function c_item_buttons($c_item)
     {
-        if (isset($c_item['form']['buttons']) && count($c_item['form']['buttons'])) {
+        if (!empty($c_item['form']['buttons']) && !empty($c_item['raw'])) {
             AMI_DHP_Utils::getInstance()->add_c_delete_button($c_item['form']['buttons'], $c_item['raw']);
         }
 
